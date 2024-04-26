@@ -1,0 +1,7 @@
+#Data Folders
+data/
+cache/
+output/
+
+#Python Cache
+__pycache__/
