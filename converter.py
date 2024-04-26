@@ -102,15 +102,16 @@ def get_distance_haversine(lat1, lon1, lat2, lon2):
     dy = math.radians(lon2 - lon1)
 
     a = (math.sin(dx/2) ** 2
-        + math.cos(math.radians(lat1))
-        * math.cos(math.radians(lat2))
-        * math.sin(dy/2) **2)
+         + math.cos(math.radians(lat1))
+         * math.cos(math.radians(lat2))
+         * math.sin(dy/2) ** 2)
 
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
 
     d = R * c
 
     return d
+
 
 def get_middle_point(lat1, lon1, lat2, lon2):
     """Calculate the euclidian middle-Point.
@@ -163,12 +164,13 @@ def get_middle_point_haversine(lat1, lon1, lat2, lon2):
 
     phi3 = math.atan2(math.sin(phi1) + math.sin(phi2),
                       math.sqrt(
-                          (math.cos(phi1)+Bx)*(math.cos(phi1)+Bx) + By*By ) )
+                          (math.cos(phi1)+Bx)*(math.cos(phi1)+Bx) + By*By))
     gamma3 = gamma1 + math.atan2(By, math.cos(phi1) + Bx)
 
     center_lon = math.degrees(gamma3)
     center_lat = math.degrees(phi3)
     return center_lat, center_lon
+
 
 def test_deg(deg, meter):
     """Testfunction for different deg_lon.
@@ -203,7 +205,7 @@ def test_middle_point(p1, p2, pm):
     lat2, lon2 = p2
 
     center_lat, center_lon = get_middle_point_haversine(lat1, lon1,
-                                                         lat2, lon2)
+                                                        lat2, lon2)
 
     error1 = center_lat - middle_point[0]
     error_margin1 = middle_point[0] * 0.005
@@ -211,27 +213,30 @@ def test_middle_point(p1, p2, pm):
     error2 = center_lon - middle_point[1]
     error_margin2 = middle_point[0] * 0.005
     if ((error1 <= error_margin1)
-        and (error2 <= error_margin2)):
-            print_error(error1, error_margin1)
-            print_error(error2, error_margin2)
+            and (error2 <= error_margin2)):
+        print_error(error1, error_margin1)
+        print_error(error2, error_margin2)
     else:
         print(middle_point, center_lat, center_lon)
+
 
 def print_error(error, error_margin):
     if not (error <= error_margin):
         s = "[Error] \t"
     else:
         s = "[OK]\t"
-    s+= "Actual Error in m: \t\t\t{0:4f}\n\t\tacceptable Error (0.05%): \t{1:4f}\n".format(error, error_margin)
+    s += "Actual Error in m: \t\t\t{0:4f}\n\t\tacceptable Error (0.05%): \t{1:4f}\n".format(
+        error, error_margin)
 
     print(s)
+
 
 if __name__ == "__main__":
 
     """
     N/S or E/W
     at equator  E/W at 23N/S     E/W at 45N/S   E/W at 67N/S
-	111.32 km	102.47 km        78.71 km        43.496 km
+        111.32 km	102.47 km        78.71 km        43.496 km
     """
     """
         Test for degree -> meter:
@@ -252,7 +257,7 @@ if __name__ == "__main__":
 
     p1 = 50.905478, 13.329625
     p2 = 50.905128, 13.330426
-    act_dist= 69
+    act_dist = 69
 
     test_haversine(p1, p2, act_dist)
 
@@ -260,8 +265,4 @@ if __name__ == "__main__":
     p2 = (58.643889, -3.070000)
     middle_point = (54.362222, -4.530556)
 
-    test_middle_point(p1,p2,middle_point)
-
-
-
-
+    test_middle_point(p1, p2, middle_point)

@@ -2,6 +2,7 @@ import heapq
 from collections import defaultdict
 import converter as cv
 
+
 class AStar:
     def __init__(self, adj_list, node_coordinates):
         self.adj_list = adj_list
@@ -11,10 +12,11 @@ class AStar:
         self.g_score = defaultdict(lambda: float('inf'))
         self.source = None
         self.destination = None
-        
 
-    def initialize(self, source , destination):
-        heapq.heappush(self.open_heap, (0 + self.heuristic(source, destination), 0, source)) # (f_score, g_score, node)
+    def initialize(self, source, destination):
+        # (f_score, g_score, node)
+        heapq.heappush(
+            self.open_heap, (0 + self.heuristic(source, destination), 0, source))
         self.destination = destination
         self.source = source
         self.g_score[source] = 0
@@ -26,7 +28,7 @@ class AStar:
         # return math.sqrt((point[0] - goal[0]) ** 2 + (point[1] - goal[1]) ** 2)
 
     def get_neighbors(self, v):
-            return self.adj_list[v].items()
+        return self.adj_list[v].items()
 
     def step(self):
 
@@ -43,12 +45,13 @@ class AStar:
             if tentative_g < self.g_score[neighbor]:
                 self.came_from[neighbor] = current
                 self.g_score[neighbor] = tentative_g
-                f_score = tentative_g + self.heuristic(neighbor, self.destination)
+                f_score = tentative_g + \
+                    self.heuristic(neighbor, self.destination)
 
-                heapq.heappush(self.open_heap, (f_score, tentative_g, neighbor))
+                heapq.heappush(
+                    self.open_heap, (f_score, tentative_g, neighbor))
 
         return True  # Algorithm still running
-
 
     def get_explored_nodes(self):
         return self.came_from.keys()

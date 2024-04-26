@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
+
 def make_adj_list(G):
     indices = {node: idx for idx, node in enumerate(G.nodes())}
     adj_list_with_weights = {}
@@ -36,7 +37,7 @@ def add_blender_coordinates(nodes):
     minx, miny, maxx, maxy = minx + 90, miny + 90, maxx + 90, maxy + 90
     minx, miny, maxx, maxy
 
-    c = 0.0001120378 #TODO: Find a way to calculate this value; I got this from another project
+    c = 0.0001120378  # TODO: Find a way to calculate this value; I got this from another project
     angle_rad = np.abs(nodes['y']) * np.deg2rad(1)
     x_scale_factor = np.sqrt(1 - (np.abs(nodes['y']) / 90) ** 2)
     y_scale_factor = (1 + c * (np.cos(2 * angle_rad) - 1)) / np.cos(angle_rad)
@@ -51,7 +52,8 @@ def add_blender_coordinates(nodes):
 def export_blender_coordinates(nodes, output_folder):
     export = nodes[['new_x', 'new_y', "x", "y"]]
     export.reset_index(inplace=True)
-    export.reset_index(inplace=True) # Reset index twice to get node_id and not osm_id
+    # Reset index twice to get node_id and not osm_id
+    export.reset_index(inplace=True)
     export.columns = ['node_id', 'osm_id', 'x', 'y', "lon", "lat"]
     export_path = Path(output_folder, "nodes_transformed.csv")
     export.to_csv(export_path, columns=[
