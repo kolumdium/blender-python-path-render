@@ -2,6 +2,8 @@
 data/
 cache/
 output/
+videos/
 
+*.mp4
 #Python Cache
 __pycache__/
