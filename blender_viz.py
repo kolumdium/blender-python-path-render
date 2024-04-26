@@ -58,7 +58,8 @@ vertices = np.column_stack((vertices, np.zeros(len(vertices))))
 # Setup scene for rendering
 # Use FFMPEG video format
 bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
-bpy.context.scene.render.filepath = 'C:\\Users\\plank\\Documents\\git\\dsa-pathfinding-project-3\\out\\videos\\output.mp4'  # Set output path
+video_path = Path(project_folder, "videos", place + "-a_star" + ".mp4")
+bpy.context.scene.render.filepath = str(video_path)  # Set output path
 bpy.context.scene.render.ffmpeg.format = 'MPEG4'
 bpy.context.scene.render.ffmpeg.codec = 'H264'
 bpy.context.scene.render.ffmpeg.constant_rate_factor = 'MEDIUM'
